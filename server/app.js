@@ -4,6 +4,18 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
+var session = require('express-session');
+var MySQLStore = require('express-mysql-session')(session);
+// 데이터 베이스에 접근하기 위한 접근 정보
+var options = {
+  host: 'localhost',
+  port: 3306,
+  user: 'root',
+  password: 'itc801',
+  database: 'board'
+};
+var sessionStore = new MySQLStore(options);
+
 const { Sequelize } = require('sequelize');
 
 global.sequelize = new Sequelize('board', 'root', 'itc801', {
@@ -18,6 +30,15 @@ var usersRouter = require('./routes/users');
 var BoardRouter = require('./routes/board');
 
 var app = express();
+
+// 인증에 대한 정보를 여기다가 저장하겠다.
+app.use(session({
+  key: 'session_unique_key', // 독특한 값을 넣어 겹치지 않게
+  secret: 'sdfkkjilzgjdlkce', // 암호화 알고리즘 비교 + 표준화된게 있기 때문에 솔트를 붙여 사용
+  store: sessionStore,
+  resave: false,
+  saveUninitialized: false
+}));
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

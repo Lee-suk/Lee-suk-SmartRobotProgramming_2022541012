@@ -2,6 +2,11 @@ var express = require('express');
 var router = express.Router();
 
 router.post('/write', async function (req, res) {
+
+    if (req.session.user) {
+        req.body.userId = req.session.user.id
+    }
+
     await Board.create(req.body)
     res.json({
         result: "ok"
@@ -26,9 +31,13 @@ router.post("/list", async function (req, res) {
 
     //DB에서 가져오기
     var boardList = await Board.findAll({
+        include: {
+            model: User,
+            as: "writeUser"
+        },
         limit: itemPerPage,
         offset: offset,
-        orders: [["writeTime", "DESC"]] //정렬할 필드 값, 정렬할 방향
+        order: [["writeTime", "DESC"]] //정렬할 필드 값, 정렬할 방향
     })
 
     // 페이지 총 개수
