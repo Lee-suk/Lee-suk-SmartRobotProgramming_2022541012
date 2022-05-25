@@ -1,5 +1,7 @@
 <template>
-  <div class="root">
+  <div>
+    <mjc-header></mjc-header>
+    <div class="root"></div>
     <v-text-field v-model="form.title" label="글제목"></v-text-field>
     <v-textarea v-model="form.body" label="내용"></v-textarea>
     <div class="text-center">
@@ -9,7 +11,12 @@
 </template>
 
 <script>
+import MjcHeader from "@/components/MjcHeader";
+
 export default {
+  components: {
+    MjcHeader: MjcHeader,
+  },
   data() {
     return {
       form: {

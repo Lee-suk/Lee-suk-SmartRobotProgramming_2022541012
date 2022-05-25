@@ -12,19 +12,36 @@
         v-model="form.password"
       ></v-text-field>
       <!-- margin : 바깥쪽 여백 / padding : 안쪽 여백 -->
-      <v-btn @click="login" class="mr-2">로그인</v-btn>
-      <v-btn @click="moveJoin">회원가입</v-btn>
+      <!-- <v-btn @click="login" class="mr-2">로그인</v-btn> -->
+      <mjc-btn
+        label="로그인"
+        :background="loginbtnBg"
+        fontcolor="white"
+        @click="login"
+        @changeBackground="loginBtnBackground"
+        >로그인</mjc-btn
+      >
+      <!-- <v-btn @click="moveJoin">회원가입</v-btn> -->
+      <mjc-btn label="회원가입" background="#0000ff" fontcolor="white"
+        >회원가입</mjc-btn
+      >
     </div>
   </v-layout>
 </template>
 
 <script>
 import HelloWorld from "../components/HelloWorld";
+import MjcBtn from "@/components/MjcBtn";
 
 export default {
+  components: {
+    MjcBtn,
+  },
+
   name: "Home",
   data() {
     return {
+      loginbtnBg: "#ff0000",
       form: {
         id: "",
         password: "",
@@ -33,7 +50,11 @@ export default {
     };
   },
   methods: {
-    login() {
+    loginBtnBackground(background) {
+      this.loginbtnBg = background;
+    },
+    login(background) {
+      console.log(background);
       //TODO : 폼 체크하는거 추가해야됨
       if (this.form.id == "") {
         window.alert("아이디를 입력해주세요");
