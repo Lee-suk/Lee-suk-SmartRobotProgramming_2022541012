@@ -3,7 +3,9 @@ import VueRouter from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import Join from '../views/Join.vue'
 import BoardList from '../views/board/list.vue'
-import BoarWriter from '../views/board/write.vue'
+import BoardWriter from '../views/board/write.vue'
+import BoardItem from "../views/board/item.vue"
+import BoardModify from "../views/board/modify.vue"
 
 Vue.use(VueRouter)
 
@@ -23,8 +25,17 @@ const routes = [
   },
   {
     path: "/board/write",
-    component: BoarWriter
+    component: BoardWriter
+  },
+  {
+    path: "/board/item/:id",
+    component: BoardItem
+  },
+  {
+    path: "/board/modify/:id",
+    component: BoardModify
   }
+
 ]
 
 const router = new VueRouter({
