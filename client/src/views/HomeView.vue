@@ -22,7 +22,11 @@
         >로그인</mjc-btn
       >
       <!-- <v-btn @click="moveJoin">회원가입</v-btn> -->
-      <mjc-btn label="회원가입" background="#0000ff" fontcolor="white"
+      <mjc-btn
+        label="회원가입"
+        background="#0000ff"
+        fontcolor="white"
+        @click="moveJoin"
         >회원가입</mjc-btn
       >
     </div>
@@ -68,6 +72,8 @@ export default {
       // TODO: 서버에 전송해서 로그인 시키기
       this.axios.post("/api/users/login", this.form).then((result) => {
         if (result.data.result == "ok") {
+          console.log(result.data.user);
+          this.$store.commit("setUser", result.data.user); // store에 데이터 저장
           // 로그인 성공한 경우
           this.$router.push("/board");
         }
